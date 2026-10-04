@@ -1,0 +1,16 @@
+{
+  "_comment": "Defense/security-cleared employers: roles at these organizations require security clearance or specific citizenship that may exclude non-EU applicants. Company names are matched as lowercase substring with word boundaries. Only includes confirmed defense/security agencies, not general government bodies.",
+  "company_patterns": [
+    "saab",
+    "försvarets radioanstalt",
+    "försvarets materielverk",
+    "försvarsmakten",
+    "säkerhetspolisen",
+    "statskontoret",
+    "totalförsvarets forskningsinstitut",
+    "fortifikationsverket",
+    "försvarshögskolan",
+    "myndigheten för samhällsskydd och beredskap"
+  ],
+  "gate_score": 8
+}
