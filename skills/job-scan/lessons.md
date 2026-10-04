@@ -13,17 +13,17 @@ When verifying whether auto-scoring ran, always check the run log. The launchd s
 
 Both log paths are defined in `daily_scan.sh` and the launchd plist — grep for `RUNLOG` and `StandardOutPath` to find current locations.
 
-## 数据文件路径：以 ~/Projects/job-scan/output/ 为准
+## Data file path: ~/Projects/job-scan/output/ is authoritative
 
-daily_scan.sh 的实际输出目录是 `~/Projects/job-scan/output/`，包括：
+`daily_scan.sh`'s actual output directory is `~/Projects/job-scan/output/`, including:
 
-- `job-scan-results.jsonl`（主数据）
+- `job-scan-results.jsonl` (primary data)
 - `job-scan-results.md`
 - `job-scan-results.html`
 
-`~/Documents/job/job-scan-output/` 是早期手动使用时的旧路径，已不再由 daily_scan 更新。交互式评分/查询时务必读 `~/Projects/job-scan/output/job-scan-results.jsonl`，否则会漏掉最新扫描结果。
+`~/Documents/job/job-scan-output/` was an earlier manual-use path and is no longer updated by `daily_scan`. When scoring/querying interactively, always read `~/Projects/job-scan/output/job-scan-results.jsonl`, otherwise the latest scan results will be missed.
 
-SKILL.md 中的 `PLUGIN_ROOT` = `~/Projects/job-scan/`（即 `scripts/`、`output/`、`profile.md` 等均在此目录下）。
+In SKILL.md, `PLUGIN_ROOT` = `~/Projects/job-scan/` (i.e. `scripts/`, `output/`, `profile.md`, etc. all live under this directory).
 
 ## CERN LD positions have nationality restrictions
 

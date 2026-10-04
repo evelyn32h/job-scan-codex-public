@@ -113,7 +113,7 @@ def render(src, out):
         applied = ' <span class="flag">maybe applied</span>' if r.get("maybe_applied") else ""
         link = r.get("link", "")
         href = safe_href(link)
-        risks = r.get("eligibility_flags", []) + (["信息不足，待确认"] if r.get("jd_incomplete") else [])
+        risks = r.get("eligibility_flags", []) + (["Insufficient info, needs confirmation"] if r.get("jd_incomplete") else [])
         risk_html = f'<div class="risk">⚠ {esc(" · ".join(risks))}</div>' if risks else ""
         btns = "".join(
             f'<button class="act" onclick="mark(this,\'{s}\')"{" disabled" if status == s else ""}>{label}</button>'
@@ -124,7 +124,7 @@ def render(src, out):
 <td class="score" style="color:{score_color(sc)}">{esc(sc)}</td>
 <td><span class="lane" style="background:{lc}1a;color:{lc}">{esc(lane)}</span></td>
 <td class="company">{esc(r.get('company',''))}</td>
-<td class="title">{esc(r.get('title',''))}<div class="meta">发布：{esc(r.get('publication_date','')[:10]) or '未知'} · 截止：{esc(r.get('application_deadline','')[:10]) or '未说明'}</div></td>
+<td class="title">{esc(r.get('title',''))}<div class="meta">Published: {esc(r.get('publication_date','')[:10]) or 'Unknown'} · Deadline: {esc(r.get('application_deadline','')[:10]) or 'Not stated'}</div></td>
 <td class="loc">{esc(loc)}</td>
 <td class="reason">{risk_html}{esc(r.get('reason',''))}</td>
 <td><span class="status" style="color:{sfg};background:{sbg}">{esc(status)}</span>{applied}</td>
@@ -189,11 +189,11 @@ a {{ color:#2563eb; text-decoration:none; font-size:16px; }}
 <div class="controls">
 <button data-f="all" class="active" onclick="flt(this)">All</button>
 <button data-f="shortlisted" onclick="flt(this)">Shortlisted</button>
-<button data-f="unprocessed" onclick="flt(this)">未处理</button>
+<button data-f="unprocessed" onclick="flt(this)">Unprocessed</button>
 <button data-f="hi" onclick="flt(this)">≥75 pts</button>
-<label>日期 <select id="date-window" onchange="applyFilters()"><option value="7">近7天发布</option><option value="30">近30天发布</option><option value="today">今日发现</option><option value="all">所有日期（含未知）</option></select></label>
-<label>最低分 <select id="min-score" onchange="applyFilters()"><option value="75">75</option><option value="65">65</option><option value="0">不限（含待评分）</option></select></label>
-<label><input id="hide-processed" type="checkbox" checked onchange="applyFilters()">隐藏已申请/已拒绝/已审核</label>
+<label>Date <select id="date-window" onchange="applyFilters()"><option value="7">Published last 7 days</option><option value="30">Published last 30 days</option><option value="today">Found today</option><option value="all">All dates (including unknown)</option></select></label>
+<label>Min score <select id="min-score" onchange="applyFilters()"><option value="75">75</option><option value="65">65</option><option value="0">Unlimited (including pending)</option></select></label>
+<label><input id="hide-processed" type="checkbox" checked onchange="applyFilters()">Hide applied/rejected/reviewed</label>
 <span id="filtered-count"></span>
 </div>
 </header>
@@ -240,7 +240,7 @@ function applyFilters(){{
     if(show) count++;
     tr.style.display=show?'':'none';
   }});
-  document.getElementById('filtered-count').textContent=count+' 个符合筛选';
+  document.getElementById('filtered-count').textContent=count+' matching filters';
 }}
 applyFilters();
 const STATUS_COLOR={status_color_json};

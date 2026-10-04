@@ -36,7 +36,7 @@ ML_TRAINING_RE = re.compile(
     re.IGNORECASE,
 )
 
-SWEDISH_PENALTY_MENTIONED_RE = re.compile(r"瑞典语|Swedish|svenska", re.IGNORECASE)
+SWEDISH_PENALTY_MENTIONED_RE = re.compile(r"Swedish|svenska", re.IGNORECASE)
 
 
 def load_staffing(path):
@@ -90,8 +90,8 @@ def main(argv=None):
         score = j.get("score")
         if score is None or score < args.min_score:
             continue
-        status = j.get("status", "新")
-        if status in ("已忽略", "ignored", "已转apply", "applied"):
+        status = j.get("status", "new")
+        if status in ("ignored", "applied"):
             continue
 
         company = j.get("company", "")

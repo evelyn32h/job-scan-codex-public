@@ -1,12 +1,12 @@
-# Job Scan — Windows + Codex 版
+# Job Scan — Windows + Codex Edition
 
-原项目 https://github.com/1carusalwayswa/job-scan ，MIT 许可保留。
-新增入口是 scripts/codex_scan.py；不要使用原 Claude daily_scan.sh / setup 指令。
+Forked from https://github.com/1carusalwayswa/job-scan (MIT license retained).
+The new entry point is `scripts/codex_scan.py`; do not use the original Claude `daily_scan.sh` / setup commands.
 
-## 安装
-1. 安装 Python 3.11+（勾选 Add Python to PATH）和 Node.js LTS。重新打开 VS Code / PowerShell。
-2. 解压整个 job-scan 文件夹到固定位置，例如 C:\Users\你的用户名\Projects\job-scan。不要只复制 scripts。
-3. 在该文件夹打开 PowerShell：
+## Install
+1. Install Python 3.11+ (check "Add Python to PATH") and Node.js LTS. Reopen VS Code / PowerShell afterwards.
+2. Extract the whole `job-scan` folder to a fixed location, e.g. `C:\Users\<you>\Projects\job-scan`. Don't just copy the `scripts` folder.
+3. Open PowerShell in that folder:
 
 ```powershell
 python --version
@@ -15,37 +15,37 @@ npm install -g @openai/codex
 codex login
 codex login status
 ```
-登录选择你的 ChatGPT Plus 账户，不需要 API key。不向任何人发送 token。
-如果系统已有 OPENAI_API_KEY / CODEX_API_KEY 或自定义 provider，请核对 Codex 实际账户与计费方式。
+Log in with your ChatGPT Plus account — no API key needed, and no token is sent to anyone.
+If your system already has `OPENAI_API_KEY` / `CODEX_API_KEY` or a custom provider configured, double-check which Codex account and billing it actually uses.
 
-4. 检查 profile.md 是否准确（已按当前已知经历填写，未加入私人健康或关系信息）。修改 search_config.json 和 preferences.toml。
+4. Review `profile.md` for accuracy (fill in your known background; do not include private health or relationship information). Edit `search_config.json` and `preferences.toml` as needed.
 
-## 首次验证与使用
+## First Verification & Usage
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Run-Scan.ps1 -FetchOnly
 powershell -ExecutionPolicy Bypass -File .\Run-Scan.ps1 -ScoreOnly
 powershell -ExecutionPolicy Bypass -File .\Open-Review.ps1
 ```
-本地看板 http://localhost:8765；关闭窗口/按 Ctrl+C 可退出。
-以后完整运行：
+Local dashboard: http://localhost:8765; close the window or press Ctrl+C to exit.
+For a full run afterwards:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Run-Scan.ps1
 ```
-默认一次最多评分 20 个岗位，每批 5 个；失败批次保持待评分，下次继续。可调整 preferences.toml。
-工签不支持/工作权利/安全审查是独立提示，不排除，不降低技术分。仅明确强制瑞典或 EU/EEA 国籍且不符合时隐藏。国籍检测保守，含糊句子可能需人工确认。
-明确要求瑞典语的岗位按已有语言规则隐藏；咨询/运维/网络不按类别硬排除。
-标题/短摘要不足 300 字符的岗位保留，评分最多 59 并标待确认。当前没有通用全文补抓；公司官网需要逐家适配验证。
-来源：JobSearch（Platsbanken）。target_companies.json 初始为空，不宣称已监控任何公司。可按原 README 配置官网，抓取失败会报警并保留部分数据。未接 LinkedIn、Indeed、芬兰专用接口或 JobAd Links。
+By default, up to 20 jobs are scored per run in batches of 5; failed batches stay pending and resume next time. Adjust this in `preferences.toml`.
+No visa sponsorship / right to work / security clearance are shown as separate flags — they never exclude a job or lower the technical score. Jobs are only hidden when Swedish or EU/EEA citizenship is explicitly mandatory and the candidate doesn't meet it. Citizenship detection is conservative; ambiguous wording may need manual confirmation.
+Jobs that explicitly require Swedish are hidden by the existing language gate; consulting/ops/network roles are not hard-excluded by category.
+Jobs with a title/summary under 300 characters are kept, capped at score 59, and flagged as unconfirmed. There's currently no generic full-text re-fetch; company career pages need to be adapted and verified one by one.
+Source: JobSearch (Platsbanken). `target_companies.json` starts empty — no company is monitored by default. You can configure career pages per the original README; failed fetches are logged as warnings and partial results are kept. LinkedIn, Indeed, Finland-specific APIs, and JobAd Links are not integrated.
 
-## 每天自动运行（手动验证成功后）
+## Daily Automated Run (after manual verification succeeds)
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\Install-Schedule.ps1 -Time '07:00'
 ```
-电脑开机且用户已登录才能运行；时间按 Windows 本地时区。额度/登录过期可能使评分暂停。
-日志 output/scheduled-scan.log。卸载：Unregister-ScheduledTask -TaskName JobScan-Codex。
-如果程序强制终止遗留 scan.lock，确认没有扫描进程后删除 output/scan.lock。
-扫描期间避免在看板改状态（批次保存会重读状态，但最后写入时存在短暂竞争窗口）。
+Requires the computer to be powered on and the user logged in; the time follows the Windows local timezone. An expired quota/login may pause scoring.
+Log: `output/scheduled-scan.log`. Uninstall: `Unregister-ScheduledTask -TaskName JobScan-Codex`.
+If a forced process termination leaves a stale `scan.lock`, confirm no scan is running and delete `output/scan.lock`.
+Avoid changing job status in the dashboard while a scan is running (batch saves re-read status, but there's a brief race window on the final write).
 
-## 验证范围
-随包包含自动化测试：python -m unittest discover -s tests -v。
-已在 Linux 环境验证 Python 逻辑；Windows PowerShell/任务调度和你的 Plus 实际评分必须在你本机验证。不会代替你登录，也未部署到你的电脑。
+## Test Coverage
+Automated tests are included: `python -m unittest discover -s tests -v`.
+The Python logic has been verified on Linux; Windows PowerShell/Task Scheduler and actual scoring with your Plus account must be verified on your own machine. This does not log in on your behalf, nor is it deployed to your computer.
