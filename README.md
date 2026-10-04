@@ -4,9 +4,11 @@ Automated job scanning and LLM-powered scoring for IT positions in Sweden.
 
 A [Claude Code](https://docs.anthropic.com/en/docs/claude-code) plugin that fetches jobs from the Swedish JobTech API and target company career pages, scores them against your profile using Claude, and supports fully unattended daily runs.
 
-> This is a fork of [1carusalwayswa/job-scan](https://github.com/1carusalwayswa/job-scan) (MIT licensed) adapted to run on Windows with the [Codex CLI](https://github.com/openai/codex) instead of Claude Code. See [README-WINDOWS.md](README-WINDOWS.md) for the Windows/Codex setup instructions.
+> **This fork:** This is a fork of [1carusalwayswa/job-scan](https://github.com/1carusalwayswa/job-scan) (MIT licensed) adapted to run on **Windows with the [Codex CLI](https://github.com/openai/codex)** instead of Claude Code. If that's your setup, skip straight to **[README-WINDOWS.md](README-WINDOWS.md)** for install and usage — the sections below describe the original macOS/Linux + Claude Code workflow from upstream, kept here for reference.
 
 ## Prerequisites
+
+> _(Original upstream workflow — macOS/Linux + Claude Code. Windows/Codex users: see [README-WINDOWS.md](README-WINDOWS.md) instead.)_
 
 - **Claude Code** CLI (with an active plan or API key)
 - **Python ≥ 3.11** (uses `tomllib` from the standard library)
@@ -24,6 +26,8 @@ git clone https://github.com/evelyn32h/job-scan-codex-public ~/.claude/plugins/j
 
 ## Quick Start
 
+> _(Original upstream workflow. Windows/Codex users: see [README-WINDOWS.md](README-WINDOWS.md) instead.)_
+
 ```
 /job-scan setup
 ```
@@ -36,6 +40,8 @@ The interactive setup will:
 5. Install a daily scheduler (launchd on macOS, cron on Linux)
 
 ## Usage
+
+> _(Original upstream workflow. Windows/Codex users: see [README-WINDOWS.md](README-WINDOWS.md) instead.)_
 
 ### Interactive (in a Claude Code session)
 
